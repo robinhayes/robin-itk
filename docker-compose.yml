@@ -5,7 +5,7 @@ services:
     container_name: itk-postgres
     image: postgres:12
     volumes:
-      - itk-data:/var/lib/postgresql/data
+      - itk-postgres-data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_PASSWORD=password
@@ -13,5 +13,26 @@ services:
       - POSTGRES_DB=itk
     ports:
       - "5432:5432"
+    networks:
+      - itk-network
+  itk-grafana:
+    image: grafana/grafana:8.3.4
+    container_name: itk-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    volumes:
+      - itk-grafana-data:/var/lib/grafana:rw
+    depends_on:
+      - itk-postgres
+    networks:
+      - itk-network
+
+networks:
+  itk-network:
+    driver: bridge
+
 volumes:
-  itk-data:
+  itk-postgres-data:
+  itk-grafana-data:
