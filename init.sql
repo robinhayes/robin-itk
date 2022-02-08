@@ -1,0 +1,13 @@
+ALTER DATABASE itk SET timezone TO 'America/Vancouver';
+
+CREATE TABLE Runs (
+  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  start_time TIMESTAMPTZ NOT NULL,
+  end_time TIMESTAMPTZ
+);
+
+CREATE TABLE RobinsTable (
+  id INT PRIMARY KEY,
+  run_id INT REFERENCES Runs NOT NULL,
+  value REAL
+);
