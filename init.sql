@@ -2,8 +2,9 @@ ALTER DATABASE itk SET timezone TO 'America/Vancouver';
 
 CREATE TABLE IF NOT EXISTS Runs (
   id INT PRIMARY KEY,
-  module_id TEXT DEFAULT "prototype" NOT NULL,
-  location TEXT DEFAULT "TRIUMF" NOT NULL,
+  module_id TEXT DEFAULT 'prototype',
+  location TEXT DEFAULT 'TRIUMF',
+  status TEXT,
   start_time TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   end_time TIMESTAMPTZ
 );
@@ -13,5 +14,5 @@ CREATE TABLE IF NOT EXISTS IVCurve (
   run_id INT REFERENCES Runs NOT NULL,
   I REAL,
   V REAL,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
